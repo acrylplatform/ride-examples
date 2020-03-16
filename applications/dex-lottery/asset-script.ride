@@ -1,0 +1,21 @@
+# Lottery account Public key
+let lotto = base58'AFmQgSTJ5TgajwQMQtmXkThbbXeMn73ZqLg5zZMRgCY8'
+
+# Get lottery status
+let lottoAddr = addressFromPublicKey(lotto)
+let isOpen = getBoolean(lottoAddr, "isOpen")
+
+match (tx) {
+  case e:ExchangeTransaction => 
+    # If price asset is Acryl
+    if(!isDefined(e.sellOrder.assetPair.priceAsset)) then {
+      if(e.buyOrder.senderPublicKey == lotto || (e.sellOrder.price == 100000000 && e.sellOrder.amount == 1 && isOpen == true)) then {
+        true
+      } else {
+        false
+      }
+    } else {
+      true
+    }
+  case _ => true
+}
