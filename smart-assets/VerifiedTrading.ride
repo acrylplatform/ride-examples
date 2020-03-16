@@ -5,7 +5,7 @@
 {-# SCRIPT_TYPE ASSET #-}
 
 # BetterTokens Oracle address.
-let addr = Address(base58'3P6t5mKGwVDkyjFhtUqw4NnecyC3DRpLfkw')
+let addr = Address(base58'3JGVZkdiFoYdSDtcNESA1SvPiakQ6KdFAyP')
 
 match (tx) {
     case e:ExchangeTransaction => 
