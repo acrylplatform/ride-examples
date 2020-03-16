@@ -1,0 +1,17 @@
+# For example you want to create an asset that can be traded only by those clients who have some special asset as a license
+# So you can regulate who is able to trade your token or it may be usefull in games,
+# sending this token can give the character an ability to trade or perform other skills
+# or amount of this token can imitate the health points of the players, so you can "trade" only if you are alive:)
+#
+# In this script case you can buy or sell SmartAsset only if your USDT token balance is greater then 10
+
+{-# STDLIB_VERSION 2 #-}
+{-# CONTENT_TYPE EXPRESSION #-}
+{-# SCRIPT_TYPE ASSET #-}
+
+let USDTlicenseToTradeAsset = base58'6WyiSedm8P3XZnmrjyxEY8s4kTHMZyANb7pPS4Y4v8iZ'
+match (tx) {
+    case tx:ExchangeTransaction =>
+        assetBalance(tx.sellOrder.sender, USDTlicenseToTradeAsset) > 10_00 && assetBalance(tx.buyOrder.sender, USDTlicenseToTradeAsset) > 10_00
+    case _ => true
+}

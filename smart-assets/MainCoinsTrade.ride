@@ -1,0 +1,17 @@
+
+# You can disable transfer, masstransfer and burn of the token,
+# Also you can define in what pairs your token can be traded.
+# This token can be traded only with BTC/ETH/LTC/ZEC/DASH/XMR/USD/EUR price assets
+
+{-# STDLIB_VERSION 2 #-}
+{-# CONTENT_TYPE EXPRESSION #-}
+{-# SCRIPT_TYPE ASSET #-}
+
+let USDT = base58'6WyiSedm8P3XZnmrjyxEY8s4kTHMZyANb7pPS4Y4v8iZ'
+
+match tx {
+  case e : ExchangeTransaction =>
+    e.sellOrder.assetPair.priceAsset == USDT
+  case t:TransferTransaction | MassTransferTransaction | BurnTransaction => false
+  case _ => true
+}
